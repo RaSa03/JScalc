@@ -33,14 +33,15 @@ const button = document.createElement('div')
 let displayContent = '' //дисплей
 
 for (let i = 0; i < arr.length; i++) {
+  //циферки и кнопки
   button.setAttribute('id', `${i}`)
   button.innerHTML = arr[i]
   buttons.append(button.cloneNode(true))
 }
 const children = [...buttons.children] //конпки в массив
 
+//Входные данные математического примера
 for (const child of children) {
-  //Входные данные математического примера
   if (child.id == '0')
     //для очистки всего
     child.addEventListener('click', function () {
@@ -54,7 +55,7 @@ for (const child of children) {
       let str = displayContent
       displayContent = str.slice(0, str.length - 1)
       display.innerText = displayContent
-      display.setAttribute('class', 'display')
+      if (displayContent.length < 20) display.setAttribute('class', 'display')
     })
   else if (child.id != '18')
     // для всех кроме знака равно
@@ -66,28 +67,122 @@ for (const child of children) {
       if (displayContent.length > 20)
         display.setAttribute('class', 'display fz40')
     })
-  else child.addEventListener('click', mathDecision) // для знака равно
+  else child.addEventListener('click', MathCenter) // для знака равно
   if (isNaN(parseInt(child.innerText))) child.setAttribute('class', 'button')
   else child.setAttribute('class', 'button number')
 }
 
-function chekTask(string) {
+function MathCenter() {
+  //центр решения ======================== =============== =============== =============
+  if (!chekTask(displayContent)) {
+    if (k == 3) {
+      k = -1
+      display.innerText = 'stop checking!!! :D'
+    } else display.innerText = 'incorrect task!'
+    k++
+  } else {
+    let arr = valuArrCreator(displayContent)
+    Solver(arr)
+  }
+}
+
+function chekTask(displayCntnt) {
   //функция валидности примера
   let OpBracket = 0,
     ClBracket = 0
-  for (let i = 0; i < string.length; i++) {
-    if (string[i] == '(') OpBracket++
-    if (string[i] == ')') ClBracket++
+  for (let i = 0; i < displayCntnt.length; i++) {
+    if (displayCntnt[i] == '(') OpBracket++
+    if (displayCntnt[i] == ')') ClBracket++
     if (ClBracket > OpBracket) return false
-    if (isNaN(parseInt(string[i])) && isNaN(parseInt(string[i - 1])))
-      if (string[i] != '(' && string[i - 1] != ')') return false
+    if (
+      isNaN(parseInt(displayCntnt[i])) &&
+      isNaN(parseInt(displayCntnt[i - 1]))
+    )
+      if (displayCntnt[i] != '(' && displayCntnt[i - 1] != ')') return false
   }
-  if (ClBracket != OpBracket) return false
+  if (
+    ClBracket != OpBracket ||
+    (displayCntnt[displayCntnt.length - 1] != ')' &&
+      isNaN(parseInt(displayCntnt[displayCntnt.length - 1])))
+  )
+    return false
   return true
 }
 
-function mathDecision() {
-  //само решение примера
-  if (chekTask(displayContent)) log('OK!!!')
-  else log('Not')
+function valuArrCreator(disCon) {
+  //разбиение чисел и операции
+  const a = []
+  let i = 0,
+    l = 0,
+    j = 0
+  while (i < disCon.length) {
+    if (isNaN(parseInt(disCon[i]))) {
+      a[l] = disCon.slice(i, i + 1)
+      i++
+      l++
+    } else {
+      j = i
+      while (!isNaN(parseInt(disCon[j])) || disCon[j] == '.') {
+        j++
+      }
+      a[l] = parseFloat(disCon.slice(i, j))
+      l++
+      i = j
+    }
+  }
+  return a
+}
+function calc(num1, num2, operation) {
+  switch (operation) {
+    case '+':
+      return num1 + num2
+    case '-':
+      return num1 - num2
+    case '×':
+      return num1 * num2
+    case '÷':
+      return num1 / num2
+  }
+}
+
+const priority = {
+  '(': 0,
+  ')': 0,
+  '+': 1,
+  '-': 1,
+  '×': 2,
+  '÷': 2,
+}
+
+function Solver(Stack) {
+  let numL = -1,
+    operatL = -1,
+    numStack = [],
+    operatStack = ['']
+  for (let i = 0; i <= Stack.length; i++) {
+    if (Number.isFinite(Stack[i])) {
+      numL++
+      numStack[numL] = Stack[i]
+    } else if (
+      operatL == -1 ||
+      priority[operatStack[operatL]] < priority[Stack[i]] ||
+      Stack[i] == '('
+    ) {
+      operatL++
+      operatStack[operatL] = Stack[i]
+    } else {
+      let sum = calc(numStack[numL - 1], numStack[numL], operatStack[operatL])
+      numL--
+      numStack = numStack.slice(0, numL)
+      numStack[numL] = sum
+      operatStack = operatStack.slice(0, operatL)
+      operatL--
+      if (Stack[i] == ')') {
+        operatStack = operatStack.slice(0, operatL)
+        operatL--
+      } else i--
+      log(i, numStack, operatStack)
+    }
+  }
+  log(numStack, operatStack)
 }

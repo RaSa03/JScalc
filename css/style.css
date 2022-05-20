@@ -94,6 +94,7 @@ body {
   box-shadow: -10px 10px 5px 1px rgba(0, 0, 0, 0.21);
 }
 .display {
+  /* text-align: end; */
   overflow-wrap: break-word;
   max-height: 200px;
   font-size: 60px;
