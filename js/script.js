@@ -55,7 +55,7 @@ for (const child of children) {
       let str = displayContent
       displayContent = str.slice(0, str.length - 1)
       display.innerText = displayContent
-      if (displayContent.length < 20) display.setAttribute('class', 'display')
+      if (displayContent.length < 30) display.setAttribute('class', 'display')
     })
   else if (child.id != '18')
     // для всех кроме знака равно
@@ -64,7 +64,7 @@ for (const child of children) {
         displayContent = displayContent + child.innerText
         display.innerText = displayContent
       }
-      if (displayContent.length > 20)
+      if (displayContent.length > 30)
         display.setAttribute('class', 'display fz40')
     })
   else child.addEventListener('click', MathCenter) // для знака равно

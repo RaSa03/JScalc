@@ -85,7 +85,7 @@ body {
   max-width: 350px;
   height: auto;
   margin: 30px auto 0;
-  background: linear-gradient(145deg, #293753, #435883);
+  background: linear-gradient(145deg, #1c2538, #5c78b1);
   border-radius: 5px;
   padding: 20px;
   color: rgb(231, 231, 231);
@@ -93,6 +93,7 @@ body {
   -moz-box-shadow: -10px 10px 5px 1px rgba(0, 0, 0, 0.21);
   box-shadow: -10px 10px 5px 1px rgba(0, 0, 0, 0.21);
 }
+
 .display {
   /* text-align: end; */
   overflow-wrap: break-word;
@@ -120,4 +121,32 @@ body {
 }
 .fz40 {
   font-size: 44px;
+}
+
+@media (max-width: 425px) {
+  .calc__body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+  .display {
+    max-height: 100%;
+    height: 100%;
+    border: 1px solid rgb(122, 58, 58);
+    /* text-align: end; */
+  }
+  body {
+    padding: 0;
+  }
+  .button {
+    margin: 5px 0;
+    width: 23%;
+  }
+  /* .calc__buttons {
+    height: 100%;
+    width: 100%;
+  } */
 }
