@@ -71,7 +71,7 @@ for (const child of children) {
   if (isNaN(parseInt(child.innerText))) child.setAttribute('class', 'button')
   else child.setAttribute('class', 'button number')
 }
-
+let k = 0
 function MathCenter() {
   //центр решения ======================== =============== =============== =============
   if (!chekTask(displayContent)) {
@@ -82,7 +82,9 @@ function MathCenter() {
     k++
   } else {
     let arr = valuArrCreator(displayContent)
-    Solver(arr)
+    let answer = Solver(arr)
+    displayContent = display.innerText = answer.toString()
+    // displayContent
   }
 }
 
@@ -181,8 +183,9 @@ function Solver(Stack) {
         operatStack = operatStack.slice(0, operatL)
         operatL--
       } else i--
-      log(i, numStack, operatStack)
+      // log(i, numStack, operatStack)
     }
   }
-  log(numStack, operatStack)
+  return numStack[0]
+  // log(numStack, operatStack)
 }
