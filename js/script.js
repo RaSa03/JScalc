@@ -33,6 +33,8 @@ const history = document.querySelector('#history')
 
 const historyList = document.querySelector('#list')
 
+const deleteButton = document.querySelector('#deleteButton')
+
 const button = document.createElement('div')
 
 let displayContent = '' //дисплей
@@ -79,13 +81,25 @@ for (const child of children) {
 }
 
 let historyArr = []
+
 const historyItem = document.querySelector('.item')
 history.addEventListener('click', function () {
+  // Кнопка история
   history.classList.toggle('history-body')
   historyList.classList.toggle('display-none')
-  // historyList.innerHTML = ''
-  // for (let i = 0; i < historyArr.length; i++) {
-  // }
+  historyList.innerHTML = ''
+  deleteButton.classList.toggle('display-none')
+
+  for (let i = 0; i < historyArr.length; i++) {
+    historyItem.innerHTML = historyArr[i]
+    historyList.append(historyItem.cloneNode(true))
+  }
+})
+
+deleteButton.addEventListener('click', function () {
+  // кнопка очистить историю
+  historyArr = []
+  historyList.innerHTML = ''
 })
 
 let k = 0
@@ -101,15 +115,14 @@ function MathCenter() {
     answerDis.innerText = displayContent
     display.innerText = '=' + answer.toString()
     historyVal = displayContent + display.innerText
-    historyItem.innerHTML = historyVal
-    historyList.append(historyItem.cloneNode(true))
+    historyArr.push(historyVal)
     displayContent = answer.toString()
   }
 }
 
 function ChekMinus(cont) {
   for (let j = 0; j < cont.length; j++) {
-    if (cont[j] == '-' && (isNaN(parseInt(cont[j - 1])) || j == 0)) {
+    if (cont[j] == '-' && (cont[j - 1] == '(' || j == 0)) {
       let str1 = cont.slice(0, j)
       let str2 = cont.slice(j, cont.length)
       cont = str1 + '0' + str2

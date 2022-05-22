@@ -86,7 +86,7 @@ body {
 
 .calc__body {
   position: relative;
-  max-width: 360px;
+  max-width: 370px;
   height: auto;
   margin: 20px auto 0;
   background: linear-gradient(145deg, #1c2538, #5c78b1);
@@ -139,6 +139,8 @@ body {
   background-color: rgb(36, 47, 66);
 }
 .history {
+  display: flex;
+  flex-direction: column;
   font-size: 40px;
 }
 .history-body {
@@ -159,6 +161,15 @@ body {
 .item {
   line-height: 130%;
   border-bottom: 1px solid #aa9881;
+  border-radius: 10px;
+}
+.list {
+  flex: 1 1 auto;
+}
+.deleteButton {
+  font-size: 30px;
+  border-top: 3px solid rgb(0, 73, 102);
+  text-align: center;
 }
 @media (max-width: 425px) {
   .calc__body {
@@ -172,7 +183,7 @@ body {
     padding: 0;
   }
   .history-body {
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.8);
   }
   .calc__buttons {
     margin: 30px -20px -20px;
@@ -185,6 +196,10 @@ body {
     width: 25%;
     border-radius: 0;
     box-shadow: none;
+  }
+  .deleteButton {
+    border-top: 3px solid rgb(54, 33, 0);
+    color: rgb(184, 112, 60);
   }
   .number {
     color: rgb(255, 244, 213);
