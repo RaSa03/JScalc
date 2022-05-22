@@ -5,7 +5,7 @@ const arr = [
   'ce',
   '(',
   ')',
-  '&#8592',
+  '&#8617',
   '7',
   '8',
   '9',
@@ -23,6 +23,7 @@ const arr = [
   '=',
   '+',
 ]
+const answerDis = document.querySelector('#answer')
 
 const display = document.querySelector('#display')
 
@@ -45,8 +46,8 @@ for (const child of children) {
   if (child.id == '0')
     //для очистки всего
     child.addEventListener('click', function () {
-      displayContent = ''
-      display.innerText = displayContent
+      displayContent = display.innerText = answerDis.innerText = ''
+      // display.innerText = displayContent
       display.setAttribute('class', 'display')
     })
   else if (child.id == '3')
@@ -55,17 +56,20 @@ for (const child of children) {
       let str = displayContent
       displayContent = str.slice(0, str.length - 1)
       display.innerText = displayContent
-      if (displayContent.length < 30) display.setAttribute('class', 'display')
+      if (displayContent.length == 0 && answerDis.innerText.length != 0) {
+        displayContent = display.innerText = answerDis.innerText
+        answerDis.innerText = ''
+      }
     })
   else if (child.id != '18')
     // для всех кроме знака равно
     child.addEventListener('click', function () {
-      if (displayContent.length < 50) {
+      if (displayContent.length < 30) {
         displayContent = displayContent + child.innerText
         display.innerText = displayContent
       }
-      if (displayContent.length > 30)
-        display.setAttribute('class', 'display fz40')
+      // if (displayContent.length > 20)
+      //   display.setAttribute('class', 'display fz40')
     })
   else child.addEventListener('click', MathCenter) // для знака равно
   if (isNaN(parseInt(child.innerText))) child.setAttribute('class', 'button')
@@ -83,7 +87,9 @@ function MathCenter() {
   } else {
     let arr = valuArrCreator(displayContent)
     let answer = Solver(arr)
-    displayContent = display.innerText = answer.toString()
+    answerDis.innerText = displayContent
+    display.innerText = '= ' + answer.toString()
+    displayContent = answer.toString()
     // displayContent
   }
 }
