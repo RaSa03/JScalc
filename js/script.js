@@ -29,6 +29,10 @@ const display = document.querySelector('#display')
 
 const buttons = document.querySelector('#buttons')
 
+const history = document.querySelector('#history')
+
+const historyList = document.querySelector('#list')
+
 const button = document.createElement('div')
 
 let displayContent = '' //дисплей
@@ -68,30 +72,50 @@ for (const child of children) {
         displayContent = displayContent + child.innerText
         display.innerText = displayContent
       }
-      // if (displayContent.length > 20)
-      //   display.setAttribute('class', 'display fz40')
     })
   else child.addEventListener('click', MathCenter) // для знака равно
   if (isNaN(parseInt(child.innerText))) child.setAttribute('class', 'button')
   else child.setAttribute('class', 'button number')
 }
+
+let historyArr = []
+const historyItem = document.querySelector('.item')
+history.addEventListener('click', function () {
+  history.classList.toggle('history-body')
+  historyList.classList.toggle('display-none')
+  // historyList.innerHTML = ''
+  // for (let i = 0; i < historyArr.length; i++) {
+  // }
+})
+
 let k = 0
+let historyVal = ''
 function MathCenter() {
   //центр решения ======================== =============== =============== =============
+  displayContent = ChekMinus(displayContent)
   if (!chekTask(displayContent)) {
-    if (k == 3) {
-      k = -1
-      display.innerText = 'stop checking!!! :D'
-    } else display.innerText = 'incorrect task!'
-    k++
+    display.innerText = 'incorrect task!'
   } else {
     let arr = valuArrCreator(displayContent)
     let answer = Solver(arr)
     answerDis.innerText = displayContent
-    display.innerText = '= ' + answer.toString()
+    display.innerText = '=' + answer.toString()
+    historyVal = displayContent + display.innerText
+    historyItem.innerHTML = historyVal
+    historyList.append(historyItem.cloneNode(true))
     displayContent = answer.toString()
-    // displayContent
   }
+}
+
+function ChekMinus(cont) {
+  for (let j = 0; j < cont.length; j++) {
+    if (cont[j] == '-' && (isNaN(parseInt(cont[j - 1])) || j == 0)) {
+      let str1 = cont.slice(0, j)
+      let str2 = cont.slice(j, cont.length)
+      cont = str1 + '0' + str2
+    }
+  }
+  return cont
 }
 
 function chekTask(displayCntnt) {
