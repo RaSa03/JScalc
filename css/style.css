@@ -85,8 +85,6 @@ body {
 }
 
 .calc__body {
-  overflow: hidden;
-  height: 100%;
   position: relative;
   max-width: 370px;
   margin: 20px auto 0;
@@ -144,6 +142,7 @@ body {
   font-size: 40px;
 }
 .history-body {
+  overflow-wrap: break-word;
   overflow: scroll;
   padding: 20px;
   z-index: 5;
@@ -173,6 +172,8 @@ body {
 }
 @media (max-width: 425px) {
   .calc__body {
+    overflow: hidden;
+    height: 100%;
     max-width: 100%;
     margin: 0;
     border-radius: 0;
@@ -186,7 +187,7 @@ body {
   }
   body {
     padding: 0;
-    /* background: #000; */
+    background: #000;
   }
   .history-body {
     background: rgba(0, 0, 0, 0.8);
