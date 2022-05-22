@@ -85,9 +85,10 @@ body {
 }
 
 .calc__body {
+  overflow: hidden;
+  height: 100%;
   position: relative;
   max-width: 370px;
-  height: auto;
   margin: 20px auto 0;
   background: linear-gradient(145deg, #1c2538, #5c78b1);
   border-radius: 5px;
@@ -98,13 +99,12 @@ body {
   flex-direction: column;
 }
 .displays {
-  flex: 1 0 auto;
-  min-height: 140px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   margin-top: 40px;
   animation-duration: 1s;
+  flex: 1 1 auto;
 }
 
 .display,
@@ -124,7 +124,7 @@ body {
   flex-wrap: wrap;
   text-align: center;
   justify-content: space-between;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   transition-duration: 1s;
 }
 .button {
@@ -174,13 +174,19 @@ body {
 @media (max-width: 425px) {
   .calc__body {
     max-width: 100%;
-    height: 100%;
     margin: 0;
     border-radius: 0;
     background: linear-gradient(145deg, #aa9881, #000000);
   }
+  .display {
+    font-size: 48px;
+  }
+  .answer {
+    font-size: 32px;
+  }
   body {
     padding: 0;
+    /* background: #000; */
   }
   .history-body {
     background: rgba(0, 0, 0, 0.8);
