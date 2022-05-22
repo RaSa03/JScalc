@@ -112,6 +112,7 @@ function MathCenter() {
   } else {
     let arr = valuArrCreator(displayContent)
     let answer = Solver(arr)
+    // answer.toFixed(5)
     answerDis.innerText = displayContent
     display.innerText = '=' + answer.toString()
     historyVal = displayContent + display.innerText
@@ -229,6 +230,6 @@ function Solver(Stack) {
       // log(i, numStack, operatStack)
     }
   }
-  return numStack[0]
+  return numStack[0].toFixed(5)
   // log(numStack, operatStack)
 }
