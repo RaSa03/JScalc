@@ -230,6 +230,12 @@ function Solver(Stack) {
       // log(i, numStack, operatStack)
     }
   }
-  return numStack[0].toFixed(5)
+  let otvet = numStack[0]
+  let ostatok = otvet % 1
+  if (String(ostatok).length > 6) {
+    numStack[0].toFixed(5)
+    numStack[0] = (numStack[0] * 1000) / 1000
+    return numStack[0]
+  } else return numStack[0]
   // log(numStack, operatStack)
 }
