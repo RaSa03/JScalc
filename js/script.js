@@ -2,7 +2,7 @@
 const log = console.log
 const arr = [
   //массив значений кнопок
-  'ce',
+  'ac',
   '(',
   ')',
   '&#8617',
@@ -230,12 +230,11 @@ function Solver(Stack) {
       // log(i, numStack, operatStack)
     }
   }
-  let otvet = numStack[0]
-  let ostatok = otvet % 1
-  if (String(ostatok).length > 6) {
-    numStack[0].toFixed(5)
+  let ostatok = numStack[0] % 1
+  if (String(ostatok).length > 7) {
+    numStack[0] = numStack[0].toFixed(5)
     numStack[0] = (numStack[0] * 1000) / 1000
-    return numStack[0]
-  } else return numStack[0]
+  }
+  return numStack[0]
   // log(numStack, operatStack)
 }
